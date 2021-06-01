@@ -1,7 +1,5 @@
 package com.example.cijfersenlettersexamen;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -28,14 +26,14 @@ public class NumberViewModel extends ViewModel {
     public MutableLiveData<Integer> timerLimit  = new MutableLiveData<Integer>(2); //The amount the timer will go for in seconds, 60s is the default time
     public MutableLiveData<Boolean> timerLimitReached = new MutableLiveData<Boolean>(false);
     public MutableLiveData<LinkedList<String>> resultString = new MutableLiveData<LinkedList<String>>();
-
-    Random random = new Random();
-    Timer timer = new Timer();
-
-    private int targetNumber = 1;
-    private LinkedList<Integer> generatedNumbers = new LinkedList<Integer>();
     public int counter = 0;
 
+    private Random random = new Random();
+    private Timer timer = new Timer();
+    private int targetNumber = 1;
+    private LinkedList<Integer> generatedNumbers = new LinkedList<Integer>();
+
+    //Genereert een willekeurig getal dat de spelers en de solver moeten proberen te benaderen
     public int getTargetNumber() {
         if(this.targetNumber == 1){
             this.targetNumber = random.nextInt(maxTargetNumber + 1 - minTargetNumber) + minTargetNumber;
@@ -43,6 +41,8 @@ public class NumberViewModel extends ViewModel {
         return this.targetNumber;
     }
 
+    //Een willekeurig groot getal genereren, toevoegen aan de generatedNumbers list en
+    //numbersLimitReached op true zetten wanneer counter gelijk is aan limit
     public int getBigNumber(){
         int number;
         number = random.nextInt(maxBigNumber + 1 - minBigNumber) + minBigNumber;
@@ -64,12 +64,13 @@ public class NumberViewModel extends ViewModel {
         this.generatedNumbers.add(number);
         this.counter++;
         if(this.counter == this.limit){
-            Log.d("TAG", "Heyyy");
             numbersLimitReached.setValue(true);
         }
         return number;
     }
 
+    //Een willekeurig klein getal genereren, toevoegen aan de generatedNumbers list en
+    //numbersLimitReached op true zetten wanneer counter gelijk is aan limit
     public int getSmallNumber(){
 
         int number;
@@ -77,12 +78,12 @@ public class NumberViewModel extends ViewModel {
         this.generatedNumbers.add(number);
         this.counter++;
         if(this.counter == this.limit){
-            Log.d("TAG", "Heyyy");
             numbersLimitReached.setValue(true);
         }
         return number;
     }
 
+    //Timer starten met een period van 1 seconde
     public void startTimer() {
         long startTime = System.currentTimeMillis(); //Get the current time
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -101,12 +102,13 @@ public class NumberViewModel extends ViewModel {
         }, 500, 1000);
     }
 
+    //De solver zoekt een formule die gebruikt kan worden om met behulp van de gegenereerde
+    //getallen zo dicht mogelijk bij het target getal te komen
     public void getSolutions() {
         NumberSolver solver = new NumberSolver();
         LinkedList<String> x = new LinkedList<String>();
         solver.setInput(this.generatedNumbers, this.targetNumber,
             results -> {
-                Log.d("ZAKI", String.format("Found %d matches.", results.size()));
                 if (results.size() == 0) {
                     x.add("No solutions found.");
                 } else {
