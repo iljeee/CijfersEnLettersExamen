@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,11 +15,14 @@ import android.widget.TextView;
 
 public class GameSettings extends AppCompatActivity {
 
+    final private int maxNumberOfRounds = 6;
+    final private int minNumberOfRounds = 1;
+    final private int defaultNumberOfRounds = 3;
+
     EditText et_player1;
     EditText et_player2;
-    NumberPicker np_numberOfRounds;
     Button btn_start;
-    GameViewModel viewModel;
+    NumberPicker np_numberOfRounds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +31,28 @@ public class GameSettings extends AppCompatActivity {
 
         et_player1 = findViewById(R.id.et_player1);
         et_player2 = findViewById(R.id.et_player2);
-        np_numberOfRounds = findViewById(R.id.np_numberOfRounds);
         btn_start = findViewById(R.id.btn_start);
+        np_numberOfRounds = findViewById(R.id.np_numberOfRounds);
 
-        np_numberOfRounds.setMaxValue(6);
-        np_numberOfRounds.setMinValue(1);
-        np_numberOfRounds.setValue(3);
+        np_numberOfRounds.setMaxValue(maxNumberOfRounds);
+        np_numberOfRounds.setMinValue(minNumberOfRounds);
+        np_numberOfRounds.setValue(defaultNumberOfRounds);
     }
 
     public void startMatch(View view){
+
         String player1 = et_player1.getText().toString();
+        if(TextUtils.isEmpty(player1)) {
+            et_player1.setError("Speler 1 naam mag niet leeg zijn");
+            return;
+        }
+
         String player2 = et_player2.getText().toString();
+        if(TextUtils.isEmpty(player2)) {
+            et_player2.setError("Speler 2 naam mag niet leeg zijn");
+            return;
+        }
+
         int rounds = np_numberOfRounds.getValue();
 
         Intent i = new Intent(this, GameScreen.class);
@@ -45,6 +60,5 @@ public class GameSettings extends AppCompatActivity {
         i.putExtra("player2Name", player2);
         i.putExtra("numberOfRounds", rounds);
         startActivity(i);
-
     }
 }

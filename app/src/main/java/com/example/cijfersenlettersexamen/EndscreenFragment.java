@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 public class EndscreenFragment extends Fragment {
 
-    Button btn_share;
+    //Variabelen declareren
     Button btn_main;
     TextView tv_winnerName;
     TextView tv_winnerScore;
@@ -30,7 +30,6 @@ public class EndscreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -39,9 +38,16 @@ public class EndscreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_endscreen, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
-        btn_main = v.findViewById(R.id.btn_main);
-        btn_main.setOnClickListener(new View.OnClickListener() {
 
+        btn_main = v.findViewById(R.id.btn_main);
+        tv_winnerName = v.findViewById(R.id.tv_winnerName);
+        tv_winnerScore = v.findViewById(R.id.tv_winnerScore);
+
+        tv_winnerName.setText(viewModel.getWinnerName());
+        tv_winnerScore.setText(String.valueOf(viewModel.getWinnerScore()));
+
+        //De main activity starten, fragmennts kunnen niet met intents gestart worden omdat ze in activities zitten
+        btn_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(requireActivity(), MainActivity.class);
@@ -49,21 +55,6 @@ public class EndscreenFragment extends Fragment {
             }
         });
 
-        btn_share = v.findViewById(R.id.btn_share);
-        btn_share.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Log.d("TAG", "Sharing is caring");
-            }
-        });
-
-        tv_winnerName = v.findViewById(R.id.tv_winnerName);
-        tv_winnerName.setText(viewModel.getWinnerName());
-
-        tv_winnerScore = v.findViewById(R.id.tv_winnerScore);
-        tv_winnerScore.setText(String.valueOf(viewModel.getWinnerScore()));
         return v;
-
     }
 }

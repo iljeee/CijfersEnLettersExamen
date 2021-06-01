@@ -1,7 +1,12 @@
 package com.example.cijfersenlettersexamen;
 
+import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,32 +15,38 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class LetterViewModel extends ViewModel {
-    final int maxSmallNumber = 9;
-    final int minSmallNumber = 1;
-    final int maxBigNumber = 4;
-    final int minBigNumber = 1;
+import be.bluebanana.zakisolver.LetterSolver;
+
+public class LetterViewModel extends AndroidViewModel {
     final int limit = 9;
+    final int solutionLimit = 20;
 
     public MutableLiveData<Boolean> lettersLimitReached = new MutableLiveData<Boolean>();
     public MutableLiveData<Integer> timerNumber = new MutableLiveData<Integer>(0); //Timer number
-    public MutableLiveData<Integer> timerLimit  = new MutableLiveData<Integer>(7); //The amount the timer will go for in seconds, 60s is the default time
+    public MutableLiveData<Integer> timerLimit  = new MutableLiveData<Integer>(2); //The amount the timer will go for in seconds, 60s is the default time
     public MutableLiveData<Boolean> timerLimitReached = new MutableLiveData<Boolean>();
+    public MutableLiveData<LinkedList<String>> resultString = new MutableLiveData<LinkedList<String>>();
 
-    private final String[] availableConsonants = {"b", "c", "d","f", "g", "h", "j", "k", "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"};
-    private final String[] availableVowels = {"a", "e", "i", "o", "u"};
-    private LinkedList<String> generatedLetters = new LinkedList<String>();
+    private final Character[] availableConsonants = {'b', 'c', 'd','f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'};
+    private final Character[] availableVowels = {'a', 'e', 'i', 'o', 'u'};
+    private LinkedList<Character> generatedLetters = new LinkedList<Character>();
     private int counter = 0;
+    private Context context;
 
     Random random = new Random();
     Timer timer = new Timer();
 
-    public String getConsonant() {
+    public LetterViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public Character getConsonant() {
         int number;
-        String letter;
+        char letter;
         number = random.nextInt(availableConsonants.length);
         letter = availableConsonants[number];
         this.generatedLetters.add(letter);
+        Log.d("TAG", String.valueOf(this.generatedLetters));
         this.counter++;
         if(counter == limit){
             lettersLimitReached.setValue(true);
@@ -43,12 +54,13 @@ public class LetterViewModel extends ViewModel {
         return letter;
     }
 
-    public String getVowel() {
+    public Character getVowel() {
         int number;
-        String letter;
+        char letter;
         number = random.nextInt(availableVowels.length);
         letter = availableVowels[number];
         this.generatedLetters.add(letter);
+        Log.d("TAG", String.valueOf(this.generatedLetters));
         this.counter++;
         if(counter == limit){
             lettersLimitReached.setValue(true);
@@ -72,5 +84,36 @@ public class LetterViewModel extends ViewModel {
 
             }
         }, 500, 1000);
+    }
+
+    public void getSolutions() {
+        LetterSolver solver = new LetterSolver();
+        LinkedList<String> x = new LinkedList<String>();
+        solver.loadDictionary(getApplication(), R.raw.dictionary_nl);
+        solver.setInput(this.generatedLetters,
+                results -> {
+                    if (results.size() == 0) {
+                        x.add("No solutions found.");
+                    } else {
+                        results.stream()
+                                .limit(solutionLimit)
+                                .forEach(result ->
+                                        x.add(result)
+                                );
+                    }
+                    this.resultString.postValue(x);
+                }
+        );
+        // Start the solver
+        new Thread(solver).start();
+    }
+
+    public void reset() {
+        this.generatedLetters.clear();
+        this.lettersLimitReached.setValue(false);
+        this.timerLimitReached.setValue(false);
+        this.counter = 0;
+        //LinkedList<String> empty = new LinkedList<String>();
+        //this.resultString.setValue(empty);
     }
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,11 +61,15 @@ public class NumberFragment extends Fragment {
 
         tv_selectedNumbers = v.findViewById(R.id.tv_selectedLetters);
 
-        numberViewModel = new ViewModelProvider(this).get(NumberViewModel.class);
+        numberViewModel = new ViewModelProvider(requireActivity()).get(NumberViewModel.class);
         numberViewModel.numbersLimitReached.observe(getViewLifecycleOwner(), name -> {
-            btn_small.setVisibility(View.GONE);
-            btn_big.setVisibility(View.GONE);
-            numberViewModel.startTimer();
+
+            Log.d("TAG", String.valueOf(numberViewModel.timerLimitReached.getValue()));
+            if (numberViewModel.numbersLimitReached.getValue()){
+                btn_small.setVisibility(View.GONE);
+                btn_big.setVisibility(View.GONE);
+                numberViewModel.startTimer();
+            }
         });
 
         tv_targetNumber = v.findViewById(R.id.tv_targetNumber);
@@ -80,7 +85,9 @@ public class NumberFragment extends Fragment {
         });
 
         numberViewModel.timerLimitReached.observe(getViewLifecycleOwner(), name -> {
-            viewModel.nextFragment();
+            if(numberViewModel.timerLimitReached.getValue()){
+                viewModel.nextFragment();
+            }
         });
         // Inflate the layout for this fragment
         return v;

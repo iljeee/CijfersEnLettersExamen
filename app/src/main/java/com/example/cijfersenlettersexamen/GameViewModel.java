@@ -1,28 +1,28 @@
 package com.example.cijfersenlettersexamen;
 
-import android.util.Log;
-
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class GameViewModel extends ViewModel {
 
-    private int numberOfRounds = 0;
-    private boolean pointAssigned = false;
+    final public NumberFragment numberFragment = new NumberFragment();
+    final public LetterFragment letterFragment = new LetterFragment();
+    final public ResultFragment resultFragment = new ResultFragment();
+    final public EndscreenFragment endscreenFragment = new EndscreenFragment();
 
-    final NumberFragment numberFragment = new NumberFragment();
-    final LetterFragment letterFragment = new LetterFragment();
-    final ResultFragment resultFragment = new ResultFragment();
-    final EndscreenFragment endscreenFragment = new EndscreenFragment();
-
+    //Variabelen die observed kunnen worden en een actie kunnen triggeren als ze veranderen
     public MutableLiveData<String> player1Name = new MutableLiveData<String>();
     public MutableLiveData<String> player2Name = new MutableLiveData<String>();
     public MutableLiveData<Integer> player1Score = new MutableLiveData<Integer>(0);
     public MutableLiveData<Integer> player2Score = new MutableLiveData<Integer>(0);
     public MutableLiveData<Integer> currentRound = new MutableLiveData<Integer>(1);
     public MutableLiveData<Fragment> currentFragment = new MutableLiveData<Fragment>(numberFragment);
+
     public Fragment currentGame = numberFragment;
+
+    private int numberOfRounds = 0;
+    private boolean pointAssigned = false;
 
     public void setPlayerNames(String firstPlayerName, String secondPlayerName){
         player1Name.setValue(firstPlayerName);
@@ -34,9 +34,12 @@ public class GameViewModel extends ViewModel {
     }
 
     public void nextFragment(){
+        //Wanneer we in number of letter fragment zitten, gaan we naar result fragment
         if (currentFragment.getValue() == numberFragment || currentFragment.getValue() == letterFragment){
             currentFragment.setValue(resultFragment);
             return;
+        //We blijven spelen als we in result fragment zitten, currentround kleiner is dan totaal aantal rounds
+        //en er een score gegeven is
         } else if (currentFragment.getValue() == resultFragment && numberOfRounds > currentRound.getValue() && pointAssigned){
             if (currentGame == numberFragment){
                 currentFragment.setValue(letterFragment);
@@ -47,11 +50,13 @@ public class GameViewModel extends ViewModel {
             }
             currentRound.setValue(currentRound.getValue()+1);
             pointAssigned = false;
+        //Wanneer current round gelijk is aan totaal aantal rounds en er is een score gegeven, gaan we naar het eindscherm
         } else if (numberOfRounds == currentRound.getValue() && pointAssigned){
             currentFragment.setValue(endscreenFragment);
         }
     }
 
+    //De spelers punten geven
     public void addPoint(int player) {
         if(player == 1 && !pointAssigned){
             player1Score.setValue(player1Score.getValue()+1);
@@ -62,6 +67,16 @@ public class GameViewModel extends ViewModel {
         }
     }
 
+    //Beide spelers krijgen een punt indien gelijkspel
+    public void draw() {
+        if(!pointAssigned) {
+            player1Score.setValue(player1Score.getValue() + 1);
+            player2Score.setValue(player2Score.getValue() + 1);
+            pointAssigned = true;
+        }
+    }
+
+    //Bepalen wie de winnaar is of gelijkspel
     public String getWinnerName() {
         if(player1Score.getValue() > player2Score.getValue()){
             return player1Name.getValue();
@@ -70,21 +85,13 @@ public class GameViewModel extends ViewModel {
         } else {
             return "It's a draw!";
         }
-
     }
 
+    //Bepalen wat de winnende score is
     public int getWinnerScore() {
         if(player1Score.getValue() > player2Score.getValue()){
             return player1Score.getValue();
         }
         return player2Score.getValue();
-    }
-
-    public void draw() {
-        if(!pointAssigned) {
-            player1Score.setValue(player1Score.getValue() + 1);
-            player2Score.setValue(player2Score.getValue() + 1);
-            pointAssigned = true;
-        }
     }
 }
