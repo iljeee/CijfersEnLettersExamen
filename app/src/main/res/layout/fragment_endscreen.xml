@@ -11,6 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Player x won"
+        android:textColor="@color/yellow"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,6 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Their score"
+        android:textColor="@color/yellow"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -28,16 +34,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_winnerName"
         app:layout_constraintVertical_bias="0.08" />
 
-    <Button
+    <ImageView
         android:id="@+id/btn_main"
+        android:src="@drawable/endscreen_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back to main menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.773" />
+        app:layout_constraintVertical_bias="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,12 @@
 package com.example.cijfersenlettersexamen;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -13,12 +15,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 public class LetterFragment extends Fragment {
 
-    Button btn_vowel;
-    Button btn_consonant;
+    ImageView btn_vowel;
+    ImageView btn_consonant;
     TextView tv_selectedLetters;
     ProgressBar pb_progressBar;
     GameViewModel viewModel;
     LetterViewModel letterViewModel;
+    MediaPlayer player;
 
     public LetterFragment() {
         // Required empty public constructor
@@ -34,6 +37,9 @@ public class LetterFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_letters, container, false);
 
+        player = MediaPlayer.create(requireActivity(), R.raw.jeopardy_theme_song);
+        player.setLooping(true);
+
         viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
         letterViewModel = new ViewModelProvider(requireActivity()).get(LetterViewModel.class);
 
@@ -48,6 +54,7 @@ public class LetterFragment extends Fragment {
                 btn_consonant.setVisibility(View.GONE);
                 btn_vowel.setVisibility(View.GONE);
                 letterViewModel.startTimer();
+                player.start();
             }
         });
 
@@ -88,5 +95,11 @@ public class LetterFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        player.stop();
     }
 }

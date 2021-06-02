@@ -1,5 +1,7 @@
 package com.example.cijfersenlettersexamen;
 
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -17,12 +19,12 @@ public class GameViewModel extends ViewModel {
     public MutableLiveData<Integer> player1Score = new MutableLiveData<Integer>(0);
     public MutableLiveData<Integer> player2Score = new MutableLiveData<Integer>(0);
     public MutableLiveData<Integer> currentRound = new MutableLiveData<Integer>(1);
+    public MutableLiveData<Boolean> pointAssigned = new MutableLiveData<Boolean>(false);
     public MutableLiveData<Fragment> currentFragment = new MutableLiveData<Fragment>(numberFragment);
 
     public Fragment currentGame = numberFragment;
 
     private int numberOfRounds = 0;
-    private boolean pointAssigned = false;
 
     public void setPlayerNames(String firstPlayerName, String secondPlayerName){
         player1Name.setValue(firstPlayerName);
@@ -40,7 +42,7 @@ public class GameViewModel extends ViewModel {
             return;
         //We blijven spelen als we in result fragment zitten, currentround kleiner is dan totaal aantal rounds
         //en er een score gegeven is
-        } else if (currentFragment.getValue() == resultFragment && numberOfRounds > currentRound.getValue() && pointAssigned){
+        } else if (currentFragment.getValue() == resultFragment && numberOfRounds > currentRound.getValue() && pointAssigned.getValue()){
             if (currentGame == numberFragment){
                 currentFragment.setValue(letterFragment);
                 currentGame = letterFragment;
@@ -49,30 +51,30 @@ public class GameViewModel extends ViewModel {
                 currentGame = numberFragment;
             }
             currentRound.setValue(currentRound.getValue()+1);
-            pointAssigned = false;
+            pointAssigned.setValue(false);
         //Wanneer current round gelijk is aan totaal aantal rounds en er is een score gegeven, gaan we naar het eindscherm
-        } else if (numberOfRounds == currentRound.getValue() && pointAssigned){
+        } else if (numberOfRounds == currentRound.getValue() && pointAssigned.getValue()){
             currentFragment.setValue(endscreenFragment);
         }
     }
 
     //De spelers punten geven
     public void addPoint(int player) {
-        if(player == 1 && !pointAssigned){
+        if(player == 1 && !pointAssigned.getValue()){
             player1Score.setValue(player1Score.getValue()+1);
-            pointAssigned = true;
-        } else if(player == 2 && !pointAssigned) {
+            pointAssigned.setValue(true);
+        } else if(player == 2 && !pointAssigned.getValue()) {
             player2Score.setValue(player2Score.getValue()+1);
-            pointAssigned = true;
+            pointAssigned.setValue(true);
         }
     }
 
     //Beide spelers krijgen een punt indien gelijkspel
     public void draw() {
-        if(!pointAssigned) {
+        if(!pointAssigned.getValue()) {
             player1Score.setValue(player1Score.getValue() + 1);
             player2Score.setValue(player2Score.getValue() + 1);
-            pointAssigned = true;
+            pointAssigned.setValue(true);
         }
     }
 

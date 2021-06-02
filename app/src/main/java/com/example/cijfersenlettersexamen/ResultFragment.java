@@ -10,16 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 
 public class ResultFragment extends Fragment {
 
-    Button btn_next;
-    Button btn_player1Won;
-    Button btn_player2Won;
-    Button btn_draw;
+    ImageView btn_next;
+    ImageView btn_player1Won;
+    ImageView btn_player2Won;
+    ImageView btn_draw;
     TextView tv_player1Won;
     TextView tv_player2Won;
     TextView tv_solutions;
@@ -91,7 +93,12 @@ public class ResultFragment extends Fragment {
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                viewModel.nextFragment();
+                if(viewModel.pointAssigned.getValue()){
+                    viewModel.nextFragment();
+                } else {
+                    Toast toast = Toast.makeText(getContext(), "Je moet een punt toekennen!", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
 

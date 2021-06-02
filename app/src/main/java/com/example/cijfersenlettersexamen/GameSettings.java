@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GameSettings extends AppCompatActivity {
 
@@ -21,7 +23,7 @@ public class GameSettings extends AppCompatActivity {
 
     EditText et_player1;
     EditText et_player2;
-    Button btn_start;
+    ImageView btn_start;
     NumberPicker np_numberOfRounds;
 
     @Override
@@ -40,17 +42,24 @@ public class GameSettings extends AppCompatActivity {
     }
 
     public void startMatch(View view){
-
         String player1 = et_player1.getText().toString();
-        if(TextUtils.isEmpty(player1)) {
-            et_player1.setError("Speler 1 naam mag niet leeg zijn");
-            return;
-        }
-
         String player2 = et_player2.getText().toString();
-        if(TextUtils.isEmpty(player2)) {
-            et_player2.setError("Speler 2 naam mag niet leeg zijn");
+        if (TextUtils.isEmpty(player1) && TextUtils.isEmpty(player2)){
+            Toast toast = Toast.makeText(this, "Beide spelers moeten een naam hebben!", Toast.LENGTH_SHORT);
+            toast.show();
             return;
+        } else {
+            if(TextUtils.isEmpty(player1)) {
+                Toast toast = Toast.makeText(this, "Speler 1 moet een naam hebben!", Toast.LENGTH_SHORT);
+                toast.show();
+                return;
+            }
+
+            if(TextUtils.isEmpty(player2)) {
+                Toast toast = Toast.makeText(this, "Speler 2 moet een naam hebben!", Toast.LENGTH_SHORT);
+                toast.show();
+                return;
+            }
         }
 
         int rounds = np_numberOfRounds.getValue();

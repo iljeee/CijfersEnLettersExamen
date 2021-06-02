@@ -4,57 +4,101 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     tools:context=".GameScreen">
+
+    <ImageView
+        android:id="@+id/gameScreenFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/numbers_border" />
 
     <TextView
         android:id="@+id/tv_roundsBanner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Round 1"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="1"
+        android:textColor="@color/yellow"
+        android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.116" />
-
-    <TextView
-        android:id="@+id/tv_player1Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Player 1 name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/tv_player1Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 1 score"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp"
+        android:text="0"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/yellow"
+        app:layout_constraintEnd_toEndOf="@+id/tv_player1Name"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/tv_player1Name"
         app:layout_constraintTop_toBottomOf="@+id/tv_player1Name" />
 
     <TextView
         android:id="@+id/tv_player2Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 2 name"
+        android:layout_marginEnd="60dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="SPELER 2"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textAlignment="textEnd"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.095" />
+
+    <TextView
+        android:id="@+id/tv_player1Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="60dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="SPELER 1"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        android:textColor="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.095" />
 
     <TextView
         android:id="@+id/tv_player2Score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 2 score"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"
+        android:text="0"
+        android:textSize="18sp"
+        android:fontFamily="@font/roboto_bold"
+        android:textColor="@color/yellow"
+        app:layout_constraintEnd_toEndOf="@+id/tv_player2Name"
+        app:layout_constraintHorizontal_bias="1"
+        app:layout_constraintStart_toStartOf="@+id/tv_player2Name"
         app:layout_constraintTop_toBottomOf="@+id/tv_player2Name" />
 
     <FrameLayout
         android:id="@+id/fl_gamePosition"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/gameScreenFrame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_roundsBanner" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_player1Score" />
 </androidx.constraintlayout.widget.ConstraintLayout>

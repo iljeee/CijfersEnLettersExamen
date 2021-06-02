@@ -10,70 +10,84 @@
         android:id="@+id/tv_player1Won"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Naam speler 1"
+        android:fontFamily="@font/roboto_regular"
+        android:text="SPELER 1"
+        android:textAllCaps="true"
+        android:textColor="@color/yellow"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_player1Won"
-        app:layout_constraintEnd_toStartOf="@+id/tv_player2Won"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_player1Won"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/btn_player1Won"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.827" />
+        app:layout_constraintVertical_bias="0.722" />
+
+    <ImageView
+        android:id="@+id/btn_player1Won"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/result_won"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.092"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/btn_player2Won"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/result_won"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_player2Won"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Naam speler 2"
+        android:fontFamily="@font/roboto_regular"
+        android:text="SPELER 2"
+        android:textAllCaps="true"
+        android:textColor="@color/yellow"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_player2Won"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.771"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btn_player2Won"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="@+id/btn_player2Won"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.827" />
+        app:layout_constraintVertical_bias="0.722" />
 
     <TextView
         android:id="@+id/tv_draw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="We're both losers"
+        android:fontFamily="@font/roboto_regular"
+        android:text="ALLEBEI GEWONNEN"
+        android:textColor="@color/yellow"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_draw"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_player1Won" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_player1Won"
+        app:layout_constraintVertical_bias="0.825" />
 
-    <Button
-        android:id="@+id/btn_player2Won"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="I won!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.764"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_player1Won"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:text="I won!"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
+    <ImageView
         android:id="@+id/btn_draw"
+        android:src="@drawable/result_draw"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="104dp"
-        android:text="Draw"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_player1Won" />
 
     <ScrollView
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_nextRound"
         app:layout_constraintEnd_toEndOf="parent"
@@ -82,17 +96,22 @@
 
         <TextView
             android:id="@+id/tv_solutions"
+            android:lineSpacingExtra="4sp"
+            android:textColor="@color/yellow"
+            android:fontFamily="@font/roboto_regular"
+            android:textSize="18sp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Loading solutions"/>
+            android:text="Loading solutions"
+            android:textAlignment="center"/>
 
     </ScrollView>
 
-    <Button
+    <ImageView
         android:id="@+id/btn_nextRound"
+        android:src="@drawable/result_next_round"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next round"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

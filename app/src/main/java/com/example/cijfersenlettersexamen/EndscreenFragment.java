@@ -1,6 +1,7 @@
 package com.example.cijfersenlettersexamen;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,16 +13,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 public class EndscreenFragment extends Fragment {
 
     //Variabelen declareren
-    Button btn_main;
+    ImageView btn_main;
     TextView tv_winnerName;
     TextView tv_winnerScore;
     GameViewModel viewModel;
+    MediaPlayer player;
 
     public EndscreenFragment() {
         // Required empty public constructor
@@ -38,6 +41,10 @@ public class EndscreenFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_endscreen, container, false);
         viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
+
+        player = MediaPlayer.create(requireActivity(), R.raw.applause);
+        player.setLooping(false);
+        player.start();
 
         btn_main = v.findViewById(R.id.btn_main);
         tv_winnerName = v.findViewById(R.id.tv_winnerName);
@@ -56,5 +63,11 @@ public class EndscreenFragment extends Fragment {
         });
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        player.stop();
     }
 }

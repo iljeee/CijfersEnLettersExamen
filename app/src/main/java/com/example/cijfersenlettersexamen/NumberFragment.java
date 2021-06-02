@@ -1,5 +1,6 @@
 package com.example.cijfersenlettersexamen;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,18 +11,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class NumberFragment extends Fragment {
 
-    Button btn_big;
-    Button btn_small;
+    ImageView btn_big;
+    ImageView btn_small;
     TextView tv_targetNumber;
     TextView tv_selectedNumbers;
     ProgressBar pb_progressBar;
     GameViewModel viewModel;
     NumberViewModel numberViewModel;
+    MediaPlayer player;
 
     public NumberFragment() {
         // Required empty public constructor
@@ -36,6 +39,9 @@ public class NumberFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_numbers, container, false);
+
+        player = MediaPlayer.create(requireActivity(), R.raw.jeopardy_theme_song);
+        player.setLooping(true);
 
         viewModel = new ViewModelProvider(requireActivity()).get(GameViewModel.class);
         numberViewModel = new ViewModelProvider(requireActivity()).get(NumberViewModel.class);
@@ -53,6 +59,7 @@ public class NumberFragment extends Fragment {
                 btn_small.setVisibility(View.GONE);
                 btn_big.setVisibility(View.GONE);
                 numberViewModel.startTimer();
+                player.start();
             }
         });
 
@@ -90,5 +97,11 @@ public class NumberFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return v;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        player.stop();
     }
 }

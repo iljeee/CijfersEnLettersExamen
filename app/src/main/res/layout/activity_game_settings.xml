@@ -4,62 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GameSettings">
+    tools:context=".GameSettings"
+    android:background="@color/blue">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Player 1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.172" />
-
-    <EditText
-        android:id="@+id/et_player1"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.057" />
+        android:layout_height="match_parent"
+        android:src="@drawable/settings_border"
+        tools:layout_editor_absoluteY="10dp" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Player 2"
+        android:fontFamily="@font/anton_regular"
+        android:text="SPEL INTSTELLINGEN"
+        android:textColor="@color/yellow"
+        android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_player1"
-        app:layout_constraintVertical_bias="0.084" />
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <EditText
+        android:id="@+id/et_player1"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:hint="SPELER 1"
+        android:textColor="@color/yellow"
+        android:textColorHint="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.082" />
 
     <EditText
         android:id="@+id/et_player2"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="Name"
+        android:backgroundTint="@color/white"
+        android:hint="SPELER 2"
+        android:textColor="@color/yellow"
+        android:textColorHint="@color/yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:layout_constraintVertical_bias="0.092" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Number of rounds"
-        app:layout_constraintBottom_toTopOf="@+id/np_numberOfRounds"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_player2" />
+        app:layout_constraintTop_toBottomOf="@id/et_player1"
+        app:layout_constraintVertical_bias="0.044" />
 
     <NumberPicker
         android:id="@+id/np_numberOfRounds"
@@ -70,17 +70,30 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_player2"
-        app:layout_constraintVertical_bias="0.284" />
+        app:layout_constraintVertical_bias="0.392" />
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AANTAL RONDES"
+        android:textColor="@color/yellow"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/np_numberOfRounds"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_player2"
+        app:layout_constraintVertical_bias="0.806" />
+
+    <ImageView
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start"
+        android:onClick="startMatch"
+        android:src="@drawable/main_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/np_numberOfRounds"
-        android:onClick="startMatch"/>
+        app:layout_constraintVertical_bias="0.401" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
